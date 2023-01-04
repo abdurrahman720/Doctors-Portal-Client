@@ -6,7 +6,7 @@ import PrimaryButton from "../../../Components/PrimaryButton";
 
 const MakeAppointment = () => {
   return (
-    <section className='mt-16' style={{background: `url(${appointment})`}}>
+    <section className='mt-24' style={{background: `url(${appointment})`}}>
       <div className="hero ">
         <div className="hero-content flex-col lg:flex-row">
           <img src={doctor} className="-mt-32 hidden md:block lg:w-1/2 rounded-lg" alt="doctor" />
