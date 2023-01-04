@@ -13,13 +13,13 @@ const Services = () => {
             icon: fluoride
         },
         {
-            id: 1,
+            id: 2,
             name: 'Cavity',
             description: 'lorem ipsum dolor sit amet, consectetur adipiscing',
             icon: cavity
         },
         {
-            id: 1,
+            id: 3,
             name: 'Teeth WHitennig',
             description: 'lorem ipsum dolor sit amet, consectetur adipiscing',
             icon: whitening

@@ -22,7 +22,7 @@ const InfoCards = () => {
             bgClass: 'bg-accent'
         },
         {
-            id: 1,
+            id: 3,
             name: "Contact Us",
             description: "Open 9.00 am to 5.00 pm everday",
             icon: phone,
