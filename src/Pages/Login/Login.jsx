@@ -1,10 +1,9 @@
 import React from "react";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit,formState: { errors } } = useForm();
     
     const handleLogin = (data) => {
       console.log(data);
@@ -24,9 +23,10 @@ const Login = () => {
           <input
             type="email"
             className="input input-bordered"
-            {...register("email")}
+            {...register("email",{required:"Email is required"})}
             placeholder="Email"
-          />
+                  />
+                  {errors.email && <p className="text-red-600" role="alert">{errors.email?.message}</p>}
         </div>
         <div className="form-control w-full max-w sx">
           <label className="label">
@@ -35,16 +35,21 @@ const Login = () => {
           <input
             type="password"
             className="input input-bordered"
-            {...register("password")}
+                      {...register("password", {
+                          required: "Passowrd is required",
+                        minLength:{value: 6, message: "Passowrd must be at least 6 characters"}
+                      })}
             placeholder="password"
           />
           <label className="label">
             <span className="label-text">Forgot password?</span>
           </label>
-        </div>
+              </div>
+              {errors.password && <p className="text-red-600" role="alert">{errors.password?.message}</p>}
 
         <input className="btn btn-accent w-full mt-5" type="submit" value="Login" />
           </form>
+          
           <p className="text-sm font-sarif ">New to Doctors Portal? <Link className="text-secondary" to="/register">Create a new account</Link> </p>
           <div className="divider mx-5">OR</div>
           <button className="btn btn-accent btn-outline">Continue with Google</button>
