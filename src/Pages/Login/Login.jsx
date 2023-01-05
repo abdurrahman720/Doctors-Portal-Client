@@ -1,13 +1,48 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../Authentication/Context/AuthProvider";
 
 const Login = () => {
+    const {emailSignIn,googleSignIn, isLoading} = useContext(AuthContext);
     const { register, handleSubmit,formState: { errors } } = useForm();
-    
+    const [inputError, setInputError] = useState('');
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location?.state?.from?.pathname || '/';
+
+
     const handleLogin = (data) => {
-      console.log(data);
-  }
+        setInputError('');
+        console.log(data);
+        emailSignIn(data.email, data.password)
+            .then(userCredentials => {
+                navigate(from, {replace: true})
+                const user = userCredentials.user;
+                console.log(user);
+               toast.success("Logged In Sucessfully!")
+               
+            })
+            .catch(err => {
+                isLoading(false);
+            setInputError(err.message)
+        })
+    }
+    
+    const handleGoogleSignIn = () => {
+        googleSignIn()
+            .then(userCredentials => {
+                const user = userCredentials.user;
+                console.log(user);
+                navigate(from, {replace: true})
+            })
+            .cacth(error => {
+                console.log(error)
+                setInputError(error.message);
+                isLoading(false)
+        })
+    }
 
   return (
     <div className="flex flex-col justify-center items-center shadow-2xl w-3/4 md:w-1/3 mx-auto my-16 py-16 rounded">
@@ -49,10 +84,10 @@ const Login = () => {
 
         <input className="btn btn-accent w-full mt-5" type="submit" value="Login" />
           </form>
-          
+          {inputError && <p className="text-red-600 text-xs">{inputError }</p>}
           <p className="text-sm font-sarif ">New to Doctors Portal? <Link className="text-secondary" to="/register">Create a new account</Link> </p>
           <div className="divider mx-5">OR</div>
-          <button className="btn btn-accent btn-outline">Continue with Google</button>
+          <button onClick={handleGoogleSignIn} className="btn btn-accent btn-outline">Continue with Google</button>
     </div>
   );
 };
