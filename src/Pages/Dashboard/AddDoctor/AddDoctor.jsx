@@ -29,7 +29,7 @@ const AddDoctor = () => {
       const img = data.image[0];
       const formData = new FormData()
       formData.append('image', img);
-      const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}`
+      const url = `https://api.imgbb.com/1/upload?&key=${imageHostKey}`
       fetch(url, {
           method: 'POST',
           body: formData
@@ -40,6 +40,7 @@ const AddDoctor = () => {
               const doctor = {
                   name: data.name,
                   email: data.email,
+                  specialty: data.specialty,
                   image: imgData.data.url
               }
               //save doctor info to database
